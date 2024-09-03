@@ -1,14 +1,13 @@
-package com.muhasib.progemanag
+package com.muhasib.progemanag.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.muhasib.progemanag.R
 
-class IntroActivity : AppCompatActivity() {
+class IntroActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +16,7 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_intro)
 
        var SignUp=findViewById<Button>(R.id.btn_sign_up_intro)
+        var SignIn= findViewById<Button>(R.id.btn_sign_in_intro)
 
         SignUp.setOnClickListener {
 
@@ -25,6 +25,11 @@ class IntroActivity : AppCompatActivity() {
 
             startActivity(intent)
 
+        }
+        SignIn.setOnClickListener {
+            var intent= Intent(this, SignUpActivity::class.java)
+
+            startActivity(intent)
         }
 
     }

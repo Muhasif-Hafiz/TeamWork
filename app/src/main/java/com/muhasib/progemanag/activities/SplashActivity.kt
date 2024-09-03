@@ -1,4 +1,4 @@
-package com.muhasib.progemanag
+package com.muhasib.progemanag.activities
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -7,8 +7,7 @@ import android.os.Handler
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.muhasib.progemanag.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
 
-startActivity(Intent(this,IntroActivity::class.java))
+startActivity(Intent(this, IntroActivity::class.java))
             finish()
         },2500)
     }

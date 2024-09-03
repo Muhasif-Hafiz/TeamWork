@@ -9,7 +9,7 @@
     android:background="@drawable/ic_splash_background"
     android:layout_gravity="center"
     android:gravity="center"
-    tools:context=".SplashActivity">
+    tools:context=".activities.SplashActivity">
 
     <TextView
         android:id="@+id/tv_app_name"
