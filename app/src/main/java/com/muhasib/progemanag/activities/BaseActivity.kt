@@ -7,8 +7,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.muhasib.progemanag.R
 
@@ -50,5 +52,13 @@ open class BaseActivity : AppCompatActivity() {
 
         Toast.makeText(this, resources.getString(R.string.please_click_back_again_to_exit), Toast.LENGTH_SHORT).show()
          Handler().postDelayed({doubleBackToExitPressedOnce=false},2000)
+    }
+
+    fun showErrorSnackBar(message : String){
+        val snackbar=Snackbar.make(findViewById(android.R.id.content),message,Snackbar.LENGTH_LONG)
+
+        val snackbarview= snackbar.view
+        snackbarview.setBackgroundColor(ContextCompat.getColor(this,R.color.snack_bar_color))
+        snackbar.show()
     }
 }
