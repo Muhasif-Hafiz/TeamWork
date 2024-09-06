@@ -27,7 +27,7 @@ class IntroActivity : BaseActivity() {
 
         }
         SignIn.setOnClickListener {
-            var intent= Intent(this, SignUpActivity::class.java)
+            var intent= Intent(this, SignInActivity::class.java)
 
             startActivity(intent)
         }

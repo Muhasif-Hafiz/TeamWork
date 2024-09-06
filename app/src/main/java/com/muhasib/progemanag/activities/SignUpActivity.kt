@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser
 
 
 import com.muhasib.progemanag.R
+import com.muhasib.progemanag.firebase.FirestoreClass
+import com.muhasib.progemanag.models.User
 
 class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,15 @@ class SignUpActivity : BaseActivity() {
             registerUser()
         }
     }
+    fun userRegisteredSuccess(){
+
+        Toast.makeText(this," You have successfully registered",Toast.LENGTH_LONG).show()
+
+        hideProgrssDialog()
+        FirebaseAuth.getInstance().signOut()
+        finish()
+
+    }
 
     private fun setupActionBar(toolbar: Toolbar) {
         setSupportActionBar(toolbar)
@@ -42,39 +53,40 @@ class SignUpActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
-    private fun registerUser(){
-        var et_name= findViewById<EditText>(R.id.et_name)
-        var et_email= findViewById<EditText>(R.id.et_email)
-        var et_password= findViewById<EditText>(R.id.et_password)
+    private fun registerUser() {
+        val et_name = findViewById<EditText>(R.id.et_name)
+        val et_email = findViewById<EditText>(R.id.et_email)
+        val et_password = findViewById<EditText>(R.id.et_password)
 
-        var Name= et_name.text.toString().trim{it<=' '}
-        var Password= et_password.text.toString().trim{it<=' '}
-        var Email= et_email.text.toString().trim{it<=' '}
+        val name = et_name.text.toString().trim { it <= ' ' }
+        val password = et_password.text.toString().trim { it <= ' ' }
+        val email = et_email.text.toString().trim { it <= ' ' }
 
-        if(validateForm(Name, Email, Password)){
+        if (validateForm(name, email, password)) {
+            showProgressDialog(resources.getString(R.string.please_wait))
 
-           showProgressDialog(resources.getString(R.string.please_wait))
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    hideProgrssDialog()  // Hide progress dialog here
 
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(Email,Password).addOnCompleteListener {
+                    if (task.isSuccessful) {
+                        val firebaseUser = task.result?.user
 
+                        if (firebaseUser != null) {
+                            val registeredEmail = firebaseUser.email!!
+                            val user = User(firebaseUser.uid, name, registeredEmail)
 
-                task->
-                hideProgrssDialog()
-
-                if(task.isSuccessful){
-                    val fireBaseUser : FirebaseUser=task.result!!.user!!
-
-                    val registeredEmail=fireBaseUser.email!!
-                    Toast.makeText(this,"$Name you have successfully registered with email address $registeredEmail",Toast.LENGTH_LONG).show()
-
-                    FirebaseAuth.getInstance().signOut()
-                    finish()
-                }else{
-                    Toast.makeText(this,task.exception!!.message,Toast.LENGTH_SHORT).show()
+                            FirestoreClass().registerUser(this, user)
+                        } else {
+                            Toast.makeText(this, "Registration failed: User data not available", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "Registration Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
         }
     }
+
     private fun validateForm(name :String, email :String, password:String) :Boolean{
 
         return when{
