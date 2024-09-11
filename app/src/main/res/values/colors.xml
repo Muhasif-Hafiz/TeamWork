@@ -10,4 +10,7 @@
     <color name="Primary_text_color">#363A43</color>
     <color name="Secondary_text_color">#7A8089</color>
     <color name ="snack_bar_color">#F72400</color>
-</resources>
+
+        <color name="sky_blue">#87CEEB</color>
+
+    </resources>
