@@ -15,8 +15,9 @@ import com.google.firebase.auth.FirebaseUser
 
 
 import com.muhasib.progemanag.R
-import com.muhasib.progemanag.firebase.FirestoreClass
+
 import com.muhasib.progemanag.models.User
+import com.projemanag.firebase.FirestoreClass
 
 class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class SignUpActivity : BaseActivity() {
 
         Toast.makeText(this," You have successfully registered",Toast.LENGTH_LONG).show()
 
-        hideProgrssDialog()
+        hideProgressDialog()
         FirebaseAuth.getInstance().signOut()
         finish()
 
@@ -67,7 +68,7 @@ class SignUpActivity : BaseActivity() {
 
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
-                    hideProgrssDialog()  // Hide progress dialog here
+                    hideProgressDialog() // Hide progress dialog here
 
                     if (task.isSuccessful) {
                         val firebaseUser = task.result?.user

@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.muhasib.progemanag.R
+import com.muhasib.progemanag.models.User
+
 
 class SignInActivity : BaseActivity() {
 
@@ -54,7 +56,7 @@ class SignInActivity : BaseActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
 
-                    hideProgrssDialog()
+                   hideProgressDialog()
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("Sign In", "signInWithEmail:success")
@@ -89,5 +91,12 @@ class SignInActivity : BaseActivity() {
 
             else -> {true}
         }
+    }
+    fun signInSuccess(user: User) {
+
+      hideProgressDialog()
+
+        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+        this.finish()
     }
 }
